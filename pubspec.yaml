@@ -1,0 +1,389 @@
+name: moeen
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  english_words: ^4.0.0
+  sqflite: ^2.0.3
+  path: 1.8.1
+  path_provider: ^2.0.11
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - constants/page.json
+    - constants/Quran.json
+    - assets/databases/quran.db
+
+  fonts:
+    - family: "p1"
+      fonts:
+        - asset: assets/fonts/p1.ttf
+    - family: "p2"
+      fonts:
+        - asset: assets/fonts/p2.ttf
+    - family: "p3"
+      fonts:
+        - asset: assets/fonts/p3.ttf
+    - family: "p4"
+      fonts:
+        - asset: assets/fonts/p4.ttf
+    - family: "p5"
+      fonts:
+        - asset: assets/fonts/p5.ttf
+    - family: "p6"
+      fonts:
+        - asset: assets/fonts/p6.ttf
+    - family: "p7"
+      fonts:
+        - asset: assets/fonts/p7.ttf
+    - family: "p8"
+      fonts:
+        - asset: assets/fonts/p8.ttf
+    - family: "p9"
+      fonts:
+        - asset: assets/fonts/p9.ttf
+    - family: "p10"
+      fonts:
+        - asset: assets/fonts/p10.ttf
+    - family: "p11"
+      fonts:
+        - asset: assets/fonts/p11.ttf
+    - family: "p12"
+      fonts:
+        - asset: assets/fonts/p12.ttf
+    - family: "p13"
+      fonts:
+        - asset: assets/fonts/p13.ttf
+    - family: "p14"
+      fonts:
+        - asset: assets/fonts/p14.ttf
+    - family: "p15"
+      fonts:
+        - asset: assets/fonts/p15.ttf
+    - family: "p16"
+      fonts:
+        - asset: assets/fonts/p16.ttf
+    - family: "p17"
+      fonts:
+        - asset: assets/fonts/p17.ttf
+    - family: "p18"
+      fonts:
+        - asset: assets/fonts/p18.ttf
+    - family: "p19"
+      fonts:
+        - asset: assets/fonts/p19.ttf
+    - family: "p20"
+      fonts:
+        - asset: assets/fonts/p20.ttf
+    - family: "p21"
+      fonts:
+        - asset: assets/fonts/p21.ttf
+    - family: "p22"
+      fonts:
+        - asset: assets/fonts/p22.ttf
+    - family: "p23"
+      fonts:
+        - asset: assets/fonts/p23.ttf
+    - family: "p24"
+      fonts:
+        - asset: assets/fonts/p24.ttf
+    - family: "p25"
+      fonts:
+        - asset: assets/fonts/p25.ttf
+    - family: "p26"
+      fonts:
+        - asset: assets/fonts/p26.ttf
+    - family: "p27"
+      fonts:
+        - asset: assets/fonts/p27.ttf
+    - family: "p28"
+      fonts:
+        - asset: assets/fonts/p28.ttf
+    - family: "p29"
+      fonts:
+        - asset: assets/fonts/p29.ttf
+    - family: "p30"
+      fonts:
+        - asset: assets/fonts/p30.ttf
+    - family: "p31"
+      fonts:
+        - asset: assets/fonts/p31.ttf
+    - family: "p32"
+      fonts:
+        - asset: assets/fonts/p32.ttf
+    - family: "p33"
+      fonts:
+        - asset: assets/fonts/p33.ttf
+    - family: "p34"
+      fonts:
+        - asset: assets/fonts/p34.ttf
+    - family: "p35"
+      fonts:
+        - asset: assets/fonts/p35.ttf
+    - family: "p36"
+      fonts:
+        - asset: assets/fonts/p36.ttf
+    - family: "p37"
+      fonts:
+        - asset: assets/fonts/p37.ttf
+    - family: "p38"
+      fonts:
+        - asset: assets/fonts/p38.ttf
+    - family: "p39"
+      fonts:
+        - asset: assets/fonts/p39.ttf
+    - family: "p40"
+      fonts:
+        - asset: assets/fonts/p40.ttf
+    - family: "p41"
+      fonts:
+        - asset: assets/fonts/p41.ttf
+    - family: "p42"
+      fonts:
+        - asset: assets/fonts/p42.ttf
+    - family: "p43"
+      fonts:
+        - asset: assets/fonts/p43.ttf
+    - family: "p44"
+      fonts:
+        - asset: assets/fonts/p44.ttf
+    - family: "p45"
+      fonts:
+        - asset: assets/fonts/p45.ttf
+    - family: "p46"
+      fonts:
+        - asset: assets/fonts/p46.ttf
+    - family: "p47"
+      fonts:
+        - asset: assets/fonts/p47.ttf
+    - family: "p48"
+      fonts:
+        - asset: assets/fonts/p48.ttf
+    - family: "p49"
+      fonts:
+        - asset: assets/fonts/p49.ttf
+    - family: "p50"
+      fonts:
+        - asset: assets/fonts/p50.ttf
+    - family: "p51"
+      fonts:
+        - asset: assets/fonts/p51.ttf
+    - family: "p52"
+      fonts:
+        - asset: assets/fonts/p52.ttf
+    - family: "p53"
+      fonts:
+        - asset: assets/fonts/p53.ttf
+    - family: "p54"
+      fonts:
+        - asset: assets/fonts/p54.ttf
+    - family: "p55"
+      fonts:
+        - asset: assets/fonts/p55.ttf
+    - family: "p56"
+      fonts:
+        - asset: assets/fonts/p56.ttf
+    - family: "p57"
+      fonts:
+        - asset: assets/fonts/p57.ttf
+    - family: "p58"
+      fonts:
+        - asset: assets/fonts/p58.ttf
+    - family: "p59"
+      fonts:
+        - asset: assets/fonts/p59.ttf
+    - family: "p60"
+      fonts:
+        - asset: assets/fonts/p60.ttf
+    - family: "p61"
+      fonts:
+        - asset: assets/fonts/p61.ttf
+    - family: "p62"
+      fonts:
+        - asset: assets/fonts/p62.ttf
+    - family: "p63"
+      fonts:
+        - asset: assets/fonts/p63.ttf
+    - family: "p64"
+      fonts:
+        - asset: assets/fonts/p64.ttf
+    - family: "p65"
+      fonts:
+        - asset: assets/fonts/p65.ttf
+    - family: "p66"
+      fonts:
+        - asset: assets/fonts/p66.ttf
+    - family: "p67"
+      fonts:
+        - asset: assets/fonts/p67.ttf
+    - family: "p68"
+      fonts:
+        - asset: assets/fonts/p68.ttf
+    - family: "p69"
+      fonts:
+        - asset: assets/fonts/p69.ttf
+    - family: "p70"
+      fonts:
+        - asset: assets/fonts/p70.ttf
+    - family: "p71"
+      fonts:
+        - asset: assets/fonts/p71.ttf
+    - family: "p72"
+      fonts:
+        - asset: assets/fonts/p72.ttf
+    - family: "p73"
+      fonts:
+        - asset: assets/fonts/p73.ttf
+    - family: "p74"
+      fonts:
+        - asset: assets/fonts/p74.ttf
+    - family: "p75"
+      fonts:
+        - asset: assets/fonts/p75.ttf
+    - family: "p76"
+      fonts:
+        - asset: assets/fonts/p76.ttf
+    - family: "p77"
+      fonts:
+        - asset: assets/fonts/p77.ttf
+    - family: "p78"
+      fonts:
+        - asset: assets/fonts/p78.ttf
+    - family: "p79"
+      fonts:
+        - asset: assets/fonts/p79.ttf
+    - family: "p80"
+      fonts:
+        - asset: assets/fonts/p80.ttf
+    - family: "p81"
+      fonts:
+        - asset: assets/fonts/p81.ttf
+    - family: "p82"
+      fonts:
+        - asset: assets/fonts/p82.ttf
+    - family: "p83"
+      fonts:
+        - asset: assets/fonts/p83.ttf
+    - family: "p84"
+      fonts:
+        - asset: assets/fonts/p84.ttf
+    - family: "p85"
+      fonts:
+        - asset: assets/fonts/p85.ttf
+    - family: "p86"
+      fonts:
+        - asset: assets/fonts/p86.ttf
+    - family: "p87"
+      fonts:
+        - asset: assets/fonts/p87.ttf
+    - family: "p88"
+      fonts:
+        - asset: assets/fonts/p88.ttf
+    - family: "p89"
+      fonts:
+        - asset: assets/fonts/p89.ttf
+    - family: "p90"
+      fonts:
+        - asset: assets/fonts/p90.ttf
+    - family: "p91"
+      fonts:
+        - asset: assets/fonts/p91.ttf
+    - family: "p92"
+      fonts:
+        - asset: assets/fonts/p92.ttf
+    - family: "p93"
+      fonts:
+        - asset: assets/fonts/p93.ttf
+    - family: "p94"
+      fonts:
+        - asset: assets/fonts/p94.ttf
+    - family: "p95"
+      fonts:
+        - asset: assets/fonts/p95.ttf
+    - family: "p96"
+      fonts:
+        - asset: assets/fonts/p96.ttf
+    - family: "p97"
+      fonts:
+        - asset: assets/fonts/p97.ttf
+    - family: "p98"
+      fonts:
+        - asset: assets/fonts/p98.ttf
+    - family: "p99"
+      fonts:
+        - asset: assets/fonts/p99.ttf
+    - family: "p100"
+      fonts:
+        - asset: assets/fonts/p100.ttf
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
