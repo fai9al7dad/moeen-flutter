@@ -55,7 +55,7 @@ class DatabaseHelper {
     ;
     var dbClient = await db;
     List<Map> list = await dbClient!.rawQuery(
-        "SELECT * FROM page join line on line.pageID = page.id join word on word.lineID = line.id");
+        "select page.id as pageID, page.pageNumber, page.rubNumber, page.hizbNumber, page.juzNumber,word.text,word.lineNumber, word.transliteration,word.isBismillah,word.isNewChapter,word.color,word.chapterCode,word.id as wordID,word.charType from page inner join line  on line.pageID = page.id inner join word on word.lineID = line.id order by word.lineNumber");
     // List<JoinedQuran> quran = [];
     List pages = initializePagesArray();
     for (int i = 0; i < list.length; i++) {

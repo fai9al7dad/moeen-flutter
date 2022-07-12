@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moeen/helpers/database/quran_database_helper.dart';
@@ -95,11 +96,18 @@ class RenderPage extends StatefulWidget {
 }
 
 class _RenderPageState extends State<RenderPage> {
+  List<int> mistakes = [];
+
+  void addMistake(id) {
+    setState(() {
+      mistakes = [...mistakes, id];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // double height = MediaQuery.of(context).size.height;
     // double width = MediaQuery.of(context).size.width;
-
     return Container(
         child: Center(
       child: RichText(
@@ -107,7 +115,8 @@ class _RenderPageState extends State<RenderPage> {
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: "p${widget.page[0]['pageNumber']}",
-                fontSize: 20),
+                fontSize: 20,
+                height: 1.9),
             children: List.generate(widget.page.length, (index) {
               int curLineNum = widget.page[index]["lineNumber"];
               // if last item this will return undefined
@@ -115,15 +124,43 @@ class _RenderPageState extends State<RenderPage> {
                   ? widget.page[index + 1]["lineNumber"]
                   : 15;
               bool lineChanged = curLineNum != aftLineNum;
+              if (index == 0) {
+                return TextSpan(
+                    text: "${widget.page[index]["text"]} ",
+                    style: TextStyle(
+                        color: mistakes.contains(widget.page[index]["wordID"])
+                            ? Colors.red
+                            : Colors.black),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap =
+                          () => {addMistake(widget.page[index]["wordID"])});
+              }
               return lineChanged
-                  ? TextSpan(text: "${widget.page[index]["text"]}\n")
-                  : TextSpan(text: widget.page[index]["text"]);
+                  ? TextSpan(
+                      text: "${widget.page[index]["text"]}\n",
+                      style: TextStyle(
+                          color: mistakes.contains(widget.page[index]["wordID"])
+                              ? Colors.red
+                              : Colors.black),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap =
+                            () => {addMistake(widget.page[index]["wordID"])})
+                  : TextSpan(
+                      text: widget.page[index]["text"],
+                      style: TextStyle(
+                          color: mistakes.contains(widget.page[index]["wordID"])
+                              ? Colors.red
+                              : Colors.black),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap =
+                            () => {addMistake(widget.page[index]["wordID"])});
             })),
-        // textAlign: TextAlign.center,
+        textAlign: TextAlign.center,
       ),
     ));
   }
 }
+
 // class Word extends StatefulWidget {
 //   var word;
 //   var pageID;
@@ -144,11 +181,12 @@ class _RenderPageState extends State<RenderPage> {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () => changeColor(),
-//       child: Text(
-//         widget.word,
-//         style: TextStyle(
+//     return Text.rich(TextSpan(
+//         text:widget.word,
+//     )); 
+//   }
+// }
+// style: TextStyle(
 //             fontSize: 22,
 //             fontFamily: "p${widget.pageID}",
 //             color: changedColor,
@@ -159,7 +197,3 @@ class _RenderPageState extends State<RenderPage> {
 //                 color: Color.fromARGB(255, 0, 0, 0),
 //               ),
 //             ]),
-//       ),
-//     );
-//   }
-// }
