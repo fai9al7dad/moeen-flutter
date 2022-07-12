@@ -1,10 +1,8 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:moeen/helpers/database/quran_database_helper.dart';
-import 'package:moeen/helpers/database/quran_models.dart';
 
 void main() => runApp(const MyApp());
 
@@ -30,7 +28,7 @@ class ListParent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (Scaffold(body: RenderList()));
+    return (const Scaffold(body: RenderList()));
   }
 }
 
@@ -89,18 +87,32 @@ class _RenderListState extends State<RenderList> {
 }
 
 class RenderPage extends StatefulWidget {
-  var page;
-  RenderPage({Key? key, this.page}) : super(key: key);
+  final page;
+  const RenderPage({Key? key, this.page}) : super(key: key);
   @override
   State<RenderPage> createState() => _RenderPageState();
 }
 
-class _RenderPageState extends State<RenderPage> {
-  List<int> mistakes = [];
+class Mistake {
+  int id;
+  Color color;
+  Mistake({required this.id, required this.color});
+}
 
+class _RenderPageState extends State<RenderPage> {
+  Map<int, Mistake> mistakes = {};
   void addMistake(id) {
+    var newMistake = Mistake(id: id, color: Colors.yellow);
+    if (mistakes[id] != null) {
+      if (mistakes[id]?.color == Colors.yellow) {
+        newMistake = Mistake(id: id, color: Colors.red);
+      }
+      if (mistakes[id]?.color == Colors.red) {
+        newMistake = Mistake(id: id, color: Colors.black);
+      }
+    }
     setState(() {
-      mistakes = [...mistakes, id];
+      mistakes[id] = newMistake;
     });
   }
 
@@ -108,56 +120,75 @@ class _RenderPageState extends State<RenderPage> {
   Widget build(BuildContext context) {
     // double height = MediaQuery.of(context).size.height;
     // double width = MediaQuery.of(context).size.width;
-    return Container(
-        child: Center(
-      child: RichText(
+    return Center(
+      child:
+          // Text(mistakes[0].id.toString()),
+          RichText(
         text: TextSpan(
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: "p${widget.page[0]['pageNumber']}",
                 fontSize: 20,
-                height: 1.9),
+                height: 1.9,
+                shadows: const [
+                  Shadow(
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 0.5,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ]),
             children: List.generate(widget.page.length, (index) {
+              var item = widget.page[index];
               int curLineNum = widget.page[index]["lineNumber"];
               // if last item this will return undefined
               int aftLineNum = index != widget.page.length - 1
                   ? widget.page[index + 1]["lineNumber"]
                   : 15;
               bool lineChanged = curLineNum != aftLineNum;
-              if (index == 0) {
+              var found = mistakes[item["wordID"]];
+              // if (mistakes.length > 0) {
+              //   found = mistakes.firstWhere(
+              //       (e) => e.id == widget.page[index]["wordID"]);
+              // }
+              // if()
+              if (item["isNewChapter"] == 1) {
+                if (item["isBismillah"] == 1 && item["pageNumber"] != 187) {
+                  return const TextSpan(
+                      text: "ﱁﱂﱃﱄ\n", style: TextStyle(fontFamily: "p1"));
+                }
                 return TextSpan(
-                    text: "${widget.page[index]["text"]} ",
-                    style: TextStyle(
-                        color: mistakes.contains(widget.page[index]["wordID"])
-                            ? Colors.red
-                            : Colors.black),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap =
-                          () => {addMistake(widget.page[index]["wordID"])});
+                    text: item["chapterCode"] + "\n",
+                    style: const TextStyle(fontFamily: "surahname"));
+              }
+              if (item["charType"] == "end" && !lineChanged) {
+                return TextSpan(
+                    text: item["text"],
+                    style: TextStyle(color: Colors.deepOrange[900]));
+              }
+              if (item["charType"] == "end" && lineChanged) {
+                return TextSpan(
+                    text: item["text"] + "\n",
+                    style: TextStyle(color: Colors.red));
               }
               return lineChanged
                   ? TextSpan(
                       text: "${widget.page[index]["text"]}\n",
                       style: TextStyle(
-                          color: mistakes.contains(widget.page[index]["wordID"])
-                              ? Colors.red
-                              : Colors.black),
+                          color: found != null ? found.color : Colors.black),
                       recognizer: TapGestureRecognizer()
-                        ..onTap =
-                            () => {addMistake(widget.page[index]["wordID"])})
+                        ..onTap = () => {addMistake(item["wordID"])})
                   : TextSpan(
-                      text: widget.page[index]["text"],
+                      text: index == 0
+                          ? "${widget.page[index]['text']} "
+                          : widget.page[index]["text"],
                       style: TextStyle(
-                          color: mistakes.contains(widget.page[index]["wordID"])
-                              ? Colors.red
-                              : Colors.black),
+                          color: found != null ? found.color : Colors.black),
                       recognizer: TapGestureRecognizer()
-                        ..onTap =
-                            () => {addMistake(widget.page[index]["wordID"])});
+                        ..onTap = () => {addMistake(item["wordID"])});
             })),
         textAlign: TextAlign.center,
       ),
-    ));
+    );
   }
 }
 

@@ -66,6 +66,9 @@ flutter:
     - assets/databases/quran.db
 
   fonts:
+    - family: "surahname"
+      fonts:
+        - asset: assets/fonts/surahNames.ttf
     - family: "p1"
       fonts:
         - asset: assets/fonts/p1.ttf

@@ -1,6 +1,5 @@
 import "dart:io" as io;
 import 'package:flutter/services.dart';
-import 'package:moeen/helpers/database/quran_models.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -31,14 +30,10 @@ class DatabaseHelper {
     return openedDatabase;
   }
 
-  Future<List<Page>> getPages() async {
+  Future<List<Map<dynamic, dynamic>>> getPages() async {
     var dbClient = await db;
     List<Map> list = await dbClient!.rawQuery("SELECT * FROM page");
-    List<Page> pages = [];
-    list.forEach((item) {
-      print(item);
-    });
-    return pages;
+    return list;
   }
 
   Future<List> getJoinedQuran() async {
@@ -52,7 +47,6 @@ class DatabaseHelper {
       return pages;
     }
 
-    ;
     var dbClient = await db;
     List<Map> list = await dbClient!.rawQuery(
         "select page.id as pageID, page.pageNumber, page.rubNumber, page.hizbNumber, page.juzNumber,word.text,word.lineNumber, word.transliteration,word.isBismillah,word.isNewChapter,word.color,word.chapterCode,word.id as wordID,word.charType from page inner join line  on line.pageID = page.id inner join word on word.lineID = line.id order by word.lineNumber");
