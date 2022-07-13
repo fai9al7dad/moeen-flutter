@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:moeen/helpers/database/quran_database_helper.dart';
+import 'package:moeen/helpers/database/quran/quran_database_helper.dart';
+import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
+import 'package:moeen/helpers/general/constants.dart';
+import 'package:collection/collection.dart'; // You have to add this manually, for some reason it cannot be added automatically
 
 void main() => runApp(const MyApp());
 
@@ -42,19 +45,11 @@ class RenderList extends StatefulWidget {
 class _RenderListState extends State<RenderList> {
   List quran = [];
   bool _loading = true;
-  // Fetch content from the json file
-  // Future<void> readJson() async {
-  //   final String response = await rootBundle.loadString('constants/Quran.json');
-  //   final data = await json.decode(response);
-  //   setState(() {
-  //     _items = data["pages"];
-  //     _loading = false;
-  //   });
-  // }
 
   void getData() async {
     var databaseHelper = DatabaseHelper();
     List _quran = await databaseHelper.getJoinedQuran();
+
     setState(() {
       quran = _quran;
       _loading = false;
@@ -70,10 +65,18 @@ class _RenderListState extends State<RenderList> {
   @override
   Widget build(BuildContext context) {
     final pageController = PageController();
-    if (_loading) return (const Text("loading"));
+    if (_loading) {
+      return Center(
+        child: (CircularProgressIndicator(
+          strokeWidth: 7,
+          color: Colors.green[700],
+        )),
+      );
+    }
     return (PageView.builder(
       controller: pageController,
       // reverse: true,
+      physics: const AlwaysScrollableScrollPhysics(),
       // scrollDirection: Axis.horizontal,
       itemCount: quran.length,
       itemBuilder: (context, index) {
@@ -93,27 +96,52 @@ class RenderPage extends StatefulWidget {
   State<RenderPage> createState() => _RenderPageState();
 }
 
-class Mistake {
-  int id;
-  Color color;
-  Mistake({required this.id, required this.color});
-}
-
 class _RenderPageState extends State<RenderPage> {
-  Map<int, Mistake> mistakes = {};
-  void addMistake(id) {
-    var newMistake = Mistake(id: id, color: Colors.yellow);
-    if (mistakes[id] != null) {
-      if (mistakes[id]?.color == Colors.yellow) {
-        newMistake = Mistake(id: id, color: Colors.red);
+  // Map<int, Mistake> mistakes = {};
+  final wordsColorsMap = WordColorMap();
+  List<WordColorMapModel> _mistakes = [];
+  @override
+  void initState() {
+    super.initState();
+    refreshData();
+  }
+
+  Future refreshData() async {
+    var m = await wordsColorsMap.getAllColors();
+    setState(() {
+      _mistakes = m;
+    });
+  }
+
+  void addMistake(
+      {required id,
+      required pageNumber,
+      required verseNumber,
+      required chapterCode,
+      color}) async {
+    String newColor;
+    newColor = MistakesColors.warning;
+    if (color != null) {
+      if (color == MistakesColors.warning) {
+        newColor = MistakesColors.mistake;
       }
-      if (mistakes[id]?.color == Colors.red) {
-        newMistake = Mistake(id: id, color: Colors.black);
+      if (color == MistakesColors.mistake) {
+        newColor = MistakesColors.revert;
       }
     }
-    setState(() {
-      mistakes[id] = newMistake;
-    });
+
+    // setState(() {
+    //   _mistakes[id] = newMistake;
+    // });
+    // inspect(s);
+    var word = WordColorMapModel(
+        pageNumber: pageNumber,
+        verseNumber: int.parse(verseNumber),
+        chapterCode: chapterCode,
+        color: newColor,
+        wordID: id);
+    await wordsColorsMap.insertWord(word);
+    await refreshData();
   }
 
   @override
@@ -125,12 +153,11 @@ class _RenderPageState extends State<RenderPage> {
           // Text(mistakes[0].id.toString()),
           RichText(
         text: TextSpan(
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black,
-                fontFamily: "p${widget.page[0]['pageNumber']}",
                 fontSize: 20,
                 height: 1.9,
-                shadows: const [
+                shadows: [
                   Shadow(
                     offset: Offset(0.0, 0.0),
                     blurRadius: 0.5,
@@ -145,8 +172,9 @@ class _RenderPageState extends State<RenderPage> {
                   ? widget.page[index + 1]["lineNumber"]
                   : 15;
               bool lineChanged = curLineNum != aftLineNum;
-              var found = mistakes[item["wordID"]];
-              // if (mistakes.length > 0) {
+              var found = _mistakes.firstWhereOrNull(
+                  (element) => element.wordID == item["wordID"]);
+
               //   found = mistakes.firstWhere(
               //       (e) => e.id == widget.page[index]["wordID"]);
               // }
@@ -163,28 +191,54 @@ class _RenderPageState extends State<RenderPage> {
               if (item["charType"] == "end" && !lineChanged) {
                 return TextSpan(
                     text: item["text"],
-                    style: TextStyle(color: Colors.deepOrange[900]));
+                    style: TextStyle(
+                      color: Colors.deepOrange[900],
+                      fontFamily: "p${widget.page[index]['pageNumber']}",
+                    ));
               }
               if (item["charType"] == "end" && lineChanged) {
                 return TextSpan(
                     text: item["text"] + "\n",
-                    style: TextStyle(color: Colors.red));
+                    style: TextStyle(
+                      color: Colors.deepOrange[900],
+                      fontFamily: "p${widget.page[index]['pageNumber']}",
+                    ));
               }
               return lineChanged
                   ? TextSpan(
                       text: "${widget.page[index]["text"]}\n",
                       style: TextStyle(
-                          color: found != null ? found.color : Colors.black),
+                        // color: found != null ? found.color : Colors.black,
+                        fontFamily: "p${widget.page[index]['pageNumber']}",
+                      ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => {addMistake(item["wordID"])})
+                        ..onTap = () => {
+                              addMistake(
+                                id: item["wordID"],
+                                pageNumber: item["pageNumber"],
+                                verseNumber: item["verseNumber"],
+                                chapterCode: item["chapterCode"],
+                              )
+                            })
                   : TextSpan(
                       text: index == 0
                           ? "${widget.page[index]['text']} "
                           : widget.page[index]["text"],
                       style: TextStyle(
-                          color: found != null ? found.color : Colors.black),
+                        color: found != null
+                            ? Color(int.parse(found.color))
+                            : Colors.black,
+                        fontFamily: "p${widget.page[index]['pageNumber']}",
+                      ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => {addMistake(item["wordID"])});
+                        ..onTap = () => {
+                              addMistake(
+                                  id: item["wordID"],
+                                  pageNumber: item["pageNumber"],
+                                  verseNumber: item["verseNumber"],
+                                  chapterCode: item["chapterCode"],
+                                  color: found?.color)
+                            });
             })),
         textAlign: TextAlign.center,
       ),
