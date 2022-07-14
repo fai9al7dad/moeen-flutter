@@ -18,5 +18,4 @@
 
 ## current iteration
 
-- [x] create WordsColorsMap sqlite
-- [x] replace local state with sqlite
+- [x] make sqlite from page to list
