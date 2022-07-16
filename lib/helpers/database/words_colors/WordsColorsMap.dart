@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:moeen/helpers/general/constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -65,12 +66,9 @@ class WordColorMap {
   }
 
   Future<void> insertWord(WordColorMapModel wcm) async {
-    // Get a reference to the database.
-
-    // Insert the Dog into the correct table. You might also specify the
-    // `conflictAlgorithm` to use in case the same dog is inserted twice.
-    //
-    // In this case, replace any previous data.
+    // chaeck if exist
+    // if exist delete old and add new, so no duplicate occur
+    // and if color is black delete it
     var dbClient = await db;
     var payload = wcm.toMap();
     var isExist = await getColorByID(id: payload["wordID"]);
@@ -79,11 +77,13 @@ class WordColorMap {
       dbClient!.delete(WordsColorsMapTable,
           where: "wordID = ?", whereArgs: [payload["wordID"]]);
     }
-    await dbClient!.insert(
-      WordsColorsMapTable,
-      payload,
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    if (payload["wordID"] != MistakesColors.revert) {
+      await dbClient!.insert(
+        WordsColorsMapTable,
+        payload,
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
   }
 
   Future<List<WordColorMapModel>> getAllColors() async {
@@ -104,6 +104,30 @@ class WordColorMap {
         color: maps[i]['color'],
       );
     });
+  }
+
+  Future<Map<String, int>> getPageColors({pageNumber}) async {
+    // Get a reference to the database.
+    var dbClient = await db;
+    // Query the table for all The Dogs.
+    final List<Map<String, dynamic>> maps = await dbClient!.query(
+        WordsColorsMapTable,
+        where: "pageNumber = ?",
+        whereArgs: [pageNumber]);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    int mistakes = 0;
+    int warnings = 0;
+    List.generate(maps.length, (i) {
+      if (maps[i]['color'] == MistakesColors.mistake) {
+        mistakes++;
+      }
+      if (maps[i]['color'] == MistakesColors.warning) {
+        warnings++;
+      }
+    });
+
+    return {"mistakes": mistakes, "warnings": warnings};
   }
 
   Future<void> deleteAllColors() async {

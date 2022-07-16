@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moeen/helpers/database/quran/quran_database_helper.dart';
+import 'package:moeen/helpers/database/quran/quran_models.dart';
 import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
 import 'package:moeen/screens/quran/components/render_page.dart';
-import 'package:collection/collection.dart'; // You have to add this manually, for some reason it cannot be added automatically
 
 class RenderQuranList extends StatefulWidget {
   const RenderQuranList({Key? key}) : super(key: key);
@@ -45,7 +45,6 @@ class _RenderQuranListState extends State<RenderQuranList> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     pageController.dispose();
   }
@@ -61,14 +60,6 @@ class _RenderQuranListState extends State<RenderQuranList> {
       );
     }
     return Scaffold(
-      appBar: AppBar(actions: [
-        IconButton(
-            icon: const Icon(Icons.abc),
-            onPressed: () => pageController.jumpToPage(89)),
-        IconButton(
-            icon: const Icon(Icons.abc),
-            onPressed: () => pageController.jumpToPage(0))
-      ]),
       body: (PageView.builder(
         controller: pageController,
         allowImplicitScrolling: true,

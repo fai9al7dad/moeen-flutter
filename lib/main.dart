@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'تطبيق معين',
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: const Color(0xfffff8ed),
+        primarySwatch: Colors.green,
       ),
       home: const RenderQuranList(),
     );

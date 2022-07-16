@@ -10,14 +10,9 @@ class Line {
 }
 
 class JoinedQuran {
-  String? chapterCode,
-      audioUrl,
-      charType,
-      isBismillah,
-      transliteration,
-      verseNumber;
+  String? chapterCode, audioUrl, charType, transliteration, verseNumber;
   String text;
-  int? id, hizbNumber, juz, lineID, isNewChapter;
+  int? id, hizbNumber, juz, lineID, isNewChapter, wordID, isBismillah;
   int pageNumber, lineNumber;
   JoinedQuran(
       {this.id,
