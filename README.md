@@ -19,3 +19,7 @@
 ## current iteration
 
 - [x] make sqlite from page to list
+- [x] go to page number
+- [ ] add page header
+- [ ] add page header mistakes and warnings
+- [ ] add surah header

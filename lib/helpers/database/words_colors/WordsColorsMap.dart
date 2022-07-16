@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -113,7 +111,7 @@ class WordColorMap {
     var dbClient = await db;
 
     // Query the table for all The Dogs.
-    final maps = await dbClient!.delete('$WordsColorsMapTable');
+    await dbClient!.delete(WordsColorsMapTable);
   }
 
   Future getColorByID({id}) async {
