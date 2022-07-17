@@ -1,80 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:moeen/helpers/database/quran/quran_database_helper.dart';
-import 'package:moeen/helpers/database/quran/quran_models.dart';
-import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
+import 'package:moeen/providers/quran/quran_provider.dart';
 import 'package:moeen/screens/quran/components/render_page.dart';
+import 'package:provider/provider.dart';
 
-class RenderQuranList extends StatefulWidget {
+class RenderQuranList extends StatelessWidget {
   const RenderQuranList({Key? key}) : super(key: key);
 
   @override
-  State<RenderQuranList> createState() => _RenderQuranListState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<QuranProvider>(
+        create: (_) => QuranProvider(), child: const MainScaffold());
+  }
 }
 
-class _RenderQuranListState extends State<RenderQuranList> {
-  final pageController = PageController();
+class MainScaffold extends StatefulWidget {
+  const MainScaffold({Key? key}) : super(key: key);
 
-  List quran = [];
-  bool _loading = true;
-  final wordsColorsMap = WordColorMap();
-  List<WordColorMapModel> _mistakes = [];
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
 
-  void getData() async {
-    var databaseHelper = DatabaseHelper();
-    List q = await databaseHelper.getJoinedQuran();
-
-    setState(() {
-      quran = q;
-      _loading = false;
-    });
-  }
-
-  void refreshData() async {
-    var m = await wordsColorsMap.getAllColors();
-    setState(() {
-      _mistakes = m;
-    });
-  }
-
+class _MainScaffoldState extends State<MainScaffold> {
   @override
   void initState() {
     super.initState();
-    getData();
-    refreshData();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
+    Provider.of<QuranProvider>(context, listen: false).getData();
+    Provider.of<QuranProvider>(context, listen: false).refreshData();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) {
-      return Center(
-        child: (CircularProgressIndicator(
-          strokeWidth: 7,
-          color: Colors.green[700],
-        )),
-      );
-    }
-    return Scaffold(
-      body: (PageView.builder(
-        controller: pageController,
-        allowImplicitScrolling: true,
-        reverse: true,
-        physics: const AlwaysScrollableScrollPhysics(),
-        // scrollDirection: Axis.horizontal,
-        itemCount: quran.length,
-        itemBuilder: (context, index) {
-          return RenderPage(
-              page: quran[index], refreshData: refreshData, colors: _mistakes);
-        },
-        // itemBuilder: (context, index) {
-        //   return RenderPage(lines: _items[index]["lines"]);
-        // }
-      )),
+    final pageController = PageController();
+    return Consumer<QuranProvider>(
+      builder: (context, quranProvider, child) => Scaffold(
+        body: quranProvider.loadingGetData
+            ? (CircularProgressIndicator(
+                strokeWidth: 7,
+                color: Colors.green[700],
+              ))
+            : (PageView.builder(
+                controller: pageController,
+                allowImplicitScrolling: true,
+                reverse: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                // scrollDirection: Axis.horizontal,
+                itemCount: quranProvider.quran.length,
+                itemBuilder: (context, index) {
+                  return RenderPage(page: quranProvider.quran[index]);
+                },
+                // itemBuilder: (context, index) {
+                //   return RenderPage(lines: _items[index]["lines"]);
+                // }
+              )),
+      ),
     );
   }
 }

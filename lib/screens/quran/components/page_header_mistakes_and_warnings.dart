@@ -1,36 +1,35 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
+import 'package:moeen/providers/quran/quran_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
-class PageHeaderMistakesAndWarnings extends StatefulWidget {
-  const PageHeaderMistakesAndWarnings({Key? key}) : super(key: key);
+class PageHeaderMistakesAndWarnings extends StatelessWidget {
+  final int pageNumber;
 
-  @override
-  State<PageHeaderMistakesAndWarnings> createState() =>
-      _PageHeaderMistakesAndWarningsState();
-}
+  PageHeaderMistakesAndWarnings({Key? key, required this.pageNumber})
+      : super(key: key);
 
-class _PageHeaderMistakesAndWarningsState
-    extends State<PageHeaderMistakesAndWarnings> {
   final wordsColorsMap = WordColorMap();
-
-  late Map<String, int> _mistakesAndWarnings;
-
-  void setPageHeadersWarningsAndMistakes() async {
-    Map<String, int> pwam = await wordsColorsMap.getPageColors(pageNumber: 2);
-    setState(() {
-      _mistakesAndWarnings = pwam;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setPageHeadersWarningsAndMistakes();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Text("$_mistakesAndWarnings");
+    return Consumer<QuranProvider>(builder: (context, quranProvider, _) {
+      var ff = quranProvider.mistakes
+          .firstWhereOrNull((element) => element.pageNumber == pageNumber);
+      // print("ff ${ff!.mistakes}");
+      // if(ff?.mistakes != null){
+      // return Text(ff!.mistakes.toString());
+      // }
+      return Row(
+        children: [
+          Text(ff?.warnings.toString() ?? "0"),
+          Text(" | "),
+          Text(ff?.mistakes.toString() ?? "0"),
+        ],
+      );
+    });
+    // return Text("a");
   }
 }
