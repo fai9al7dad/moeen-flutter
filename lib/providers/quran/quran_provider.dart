@@ -67,7 +67,7 @@ class QuranProvider with ChangeNotifier {
         color: newColor,
         wordID: id);
     await wordsColorsMap.insertWord(word);
-    await refreshData();
-    notifyListeners();
+    refreshData();
+    // notifyListeners();
   }
 }

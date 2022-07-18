@@ -20,14 +20,15 @@ class RenderPage extends StatelessWidget {
           // Text(mistakes[0]['id'].toString()),
           Column(
         children: [
-          PageHeader(pageNumber: page[0]["pageNumber"]),
+          PageHeader(page: page[0]),
+          const SizedBox(height: 10),
           Consumer<QuranProvider>(
             builder: (context, quranProvider, child) => RichText(
               text: TextSpan(
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 21,
-                    height: 1.9,
+                    fontSize: 22,
+                    height: 1.8,
                   ),
                   // shadows: [
                   //   Shadow(
@@ -123,3 +124,77 @@ class RenderPage extends StatelessWidget {
     );
   }
 }
+
+
+
+// class Word extends StatelessWidget {
+//   final int index;
+//   final item;
+//   final bool lineChanged;
+
+//   const Word(
+//       {Key? key,
+//       required this.index,
+//       required this.item,
+//       required this.lineChanged})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<QuranProvider>(builder: (context, quranProvider, child) {
+//       var found = quranProvider.mistakes
+//           .firstWhereOrNull((element) => element.wordID == item["wordID"]);
+//       if (item["isNewChapter"] == 1) {
+//         if (item["isBismillah"] == 1 && item["pageNumber"] != 187) {
+//           return RichText(
+//               text: const TextSpan(
+//                   text: "ﱁﱂﱃﱄ\n", style: TextStyle(fontFamily: "p1")));
+//         }
+//         return RichText(
+//             text: TextSpan(
+//                 text: "${item["chapterCode"]}\n",
+//                 style: const TextStyle(fontFamily: "surahname")));
+//       }
+//       if (item["charType"] == "end" && !lineChanged) {
+//         return RichText(
+//             text: TextSpan(
+//                 text: item["text"],
+//                 style: TextStyle(
+//                   color: Colors.green,
+//                   fontFamily: "p${item['pageNumber']}",
+//                 )));
+//       }
+//       if (item["charType"] == "end" && lineChanged) {
+//         return RichText(
+//             text: TextSpan(
+//                 text: "${item["text"]}\n",
+//                 style: TextStyle(
+//                   color: Colors.green,
+//                   fontFamily: "p${item['pageNumber']}",
+//                 )));
+//       }
+//       return RichText(
+//           text: TextSpan(
+//               text: index == 0
+//                   ? "${item['text']} "
+//                   : lineChanged
+//                       ? "${item['text']}\n"
+//                       : item['text'],
+//               style: TextStyle(
+//                 color: found != null
+//                     ? Color(int.parse(found.color))
+//                     : Colors.black,
+//                 fontFamily: "p${item['pageNumber']}",
+//               ),
+//               recognizer: TapGestureRecognizer()
+//                 ..onTap = () => {
+//                       quranProvider.addMistake(
+//                           id: item["wordID"],
+//                           pageNumber: item["pageNumber"],
+//                           verseNumber: item["verseNumber"],
+//                           chapterCode: item["chapterCode"],
+//                           color: found?.color)
+//                     }));
+//     });
+//   }
+// }

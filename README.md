@@ -21,7 +21,12 @@
 ## current iteration
 
 - [x] make sqlite from page to list
-- [x] go to page number
 - [ ] add page header
-- [x] add page header mistakes and warnings
+  - [x] add juz number
+  - [x] add hizb number
+  - [x] page number
+    - [ ] click to open modal to go to page
+  - [ ] surah name
+    - [ ] click to open surah list screen
+  - [x] show page mistakes and warnings
 - [ ] add surah header

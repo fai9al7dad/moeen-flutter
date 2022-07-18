@@ -68,6 +68,12 @@ flutter:
     - assets/databases/quran.db
 
   fonts:
+    - family: "montserrat-bold"
+      fonts:
+        - asset: assets/fonts/Montserrat-Arabic-Bold.otf
+    - family: "montserrat"
+      fonts:
+        - asset: assets/fonts/Montserrat-Arabic-Regular.otf
     - family: "surahname"
       fonts:
         - asset: assets/fonts/surahNames.ttf
