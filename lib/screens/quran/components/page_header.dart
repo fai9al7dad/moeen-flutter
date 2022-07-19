@@ -6,13 +6,13 @@ import 'dart:math' as math;
 
 import 'package:provider/provider.dart';
 
+var textColor = int.parse(CustomColors.textColor);
+
 class PageHeader extends StatelessWidget {
   final page;
   const PageHeader({Key? key, required this.page}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var textColor = int.parse(CustomColors.textColor);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,18 +40,36 @@ class PageHeader extends StatelessWidget {
           ],
         ),
 
-        Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 50, 0),
-          child: Row(children: [
-            PageNumber(pageNumber: page["pageNumber"]),
-            PageHeaderMistakesAndWarnings(pageNumber: page["pageNumber"]),
-          ]),
-        ),
-        const SizedBox(
-          height: 0,
-          width: 0,
+        Row(children: [
+          PageNumber(pageNumber: page["pageNumber"]),
+          PageHeaderMistakesAndWarnings(pageNumber: page["pageNumber"]),
+        ]),
+        SurahName(
+          surah: page["chapterCode"],
         )
       ],
+    );
+  }
+}
+
+class SurahName extends StatelessWidget {
+  final String surah;
+  const SurahName({Key? key, required this.surah}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {Navigator.pushNamed(context, "/surah-list")},
+      child: Row(
+        children: [
+          const Icon(Icons.unfold_more, size: 10, color: Color(0xffae8f74)),
+          Text(
+            "${surah}surah",
+            style: TextStyle(
+                color: Color(textColor), fontFamily: "surahname", fontSize: 18),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -64,7 +82,6 @@ class PageNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textColor = int.parse(CustomColors.textColor);
     final _formKey = GlobalKey<FormState>();
 
     return Consumer<QuranProvider>(
@@ -118,7 +135,7 @@ class PageNumber extends StatelessWidget {
                 scaleX: pageNumber % 2 == 0 ? 1 : -1,
                 child: const Icon(
                   Icons.menu_book_rounded,
-                  size: 18,
+                  size: 15,
                   color: Color(0xffae8f74),
                 )),
             const SizedBox(width: 5),

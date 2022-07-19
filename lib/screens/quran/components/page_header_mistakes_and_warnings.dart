@@ -33,47 +33,49 @@ class PageHeaderMistakesAndWarnings extends StatelessWidget {
 
       return Row(
         children: [
-          if (warnings! > 0)
-            Row(
-              children: [
-                Text(
-                  warnings.toString(),
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Color(textColor),
-                      fontFamily: "montserrat"),
-                ),
-                const SizedBox(width: 1),
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(int.parse(MistakesColors.warning))),
-                  height: 8,
-                  width: 8,
-                ),
-              ],
-            ),
+          warnings! > 0
+              ? Row(
+                  children: [
+                    Text(
+                      warnings.toString(),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Color(textColor),
+                          fontFamily: "montserrat"),
+                    ),
+                    const SizedBox(width: 1),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(int.parse(MistakesColors.warning))),
+                      height: 8,
+                      width: 8,
+                    ),
+                  ],
+                )
+              : const SizedBox(width: 13),
           const SizedBox(width: 4),
-          if (mistakes! > 0)
-            Row(
-              children: [
-                Text(
-                  mistakes.toString(),
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Color(textColor),
-                      fontFamily: "montserrat"),
-                ),
-                const SizedBox(width: 1),
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(int.parse(MistakesColors.mistake))),
-                  height: 8,
-                  width: 8,
-                ),
-              ],
-            ),
+          mistakes! > 0
+              ? Row(
+                  children: [
+                    Text(
+                      mistakes.toString(),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Color(textColor),
+                          fontFamily: "montserrat"),
+                    ),
+                    const SizedBox(width: 1),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(int.parse(MistakesColors.mistake))),
+                      height: 8,
+                      width: 8,
+                    ),
+                  ],
+                )
+              : const SizedBox(width: 13),
         ],
       );
     });

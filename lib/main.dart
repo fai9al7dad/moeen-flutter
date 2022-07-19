@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moeen/helpers/general/constants.dart';
 import 'package:moeen/screens/quran/render_quran_list.dart';
 
 void main() {
@@ -12,13 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: CustomRouter.routes,
       title: 'تطبيق معين',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xfffff8ed),
         primarySwatch: Colors.green,
       ),
-      home: const RenderQuranList(),
+      // home: const RenderQuranList(),
     );
   }
 }
