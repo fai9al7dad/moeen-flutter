@@ -25,7 +25,7 @@
   - [x] add juz number
   - [x] add hizb number
   - [x] page number
-    - [ ] click to open modal to go to page
+    - [x] click to open modal to go to page
   - [ ] surah name
     - [ ] click to open surah list screen
   - [x] show page mistakes and warnings
