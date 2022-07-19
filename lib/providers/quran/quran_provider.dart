@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:moeen/helpers/database/quran/quran_database_helper.dart';
 import 'package:moeen/helpers/database/quran/quran_models.dart';
@@ -6,6 +7,7 @@ import 'package:moeen/helpers/general/constants.dart';
 
 class QuranProvider with ChangeNotifier {
   final wordsColorsMap = WordColorMap();
+  final _pageController = PageController();
 
   List _quran = [];
   List<WordColorMapModel> _mistakes = [];
@@ -18,6 +20,10 @@ class QuranProvider with ChangeNotifier {
 
   bool get loadingGetData {
     return _loadingGetData;
+  }
+
+  PageController get pageController {
+    return _pageController;
   }
 
   List get quran {

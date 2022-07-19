@@ -30,7 +30,7 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    final pageController = PageController();
+    // final pageController = PageController();
     return Consumer<QuranProvider>(
       builder: (context, quranProvider, child) => Scaffold(
         body: quranProvider.loadingGetData
@@ -39,7 +39,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 color: Colors.green[700],
               ))
             : (PageView.builder(
-                controller: pageController,
+                controller: quranProvider.pageController,
                 allowImplicitScrolling: true,
                 reverse: true,
                 physics: const AlwaysScrollableScrollPhysics(),
