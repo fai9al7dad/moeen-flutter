@@ -19,10 +19,14 @@
 
 ## current iteration
 
-- [x] add page header
-  - [x] surah name
-    - [x] click to open surah list screen
 - [ ] add surah header
+- [ ] surah list
+  - [ ] show surahs name
+  - [ ] surah page from to
+  - [ ] surah type
+  - [ ] surah mistakes and warnings
+  - [ ] pages count
+  - [ ] verses count
 
 ## finished
 
@@ -34,6 +38,5 @@
   - [x] page number
   - [x] show page mistakes and warnings
     - [x] click to open modal to go to page
-  - [x] add page header
   - [x] surah name
     - [x] click to open surah list screen
