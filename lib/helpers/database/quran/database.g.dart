@@ -7,21 +7,21 @@ part of 'database.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class Page extends DataClass implements Insertable<Page> {
+class PageData extends DataClass implements Insertable<PageData> {
   final int id;
   final int pageNumber;
   final int hizbNumber;
   final int juz;
   final String chapterCode;
-  Page(
+  PageData(
       {required this.id,
       required this.pageNumber,
       required this.hizbNumber,
       required this.juz,
       required this.chapterCode});
-  factory Page.fromData(Map<String, dynamic> data, {String? prefix}) {
+  factory PageData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return Page(
+    return PageData(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       pageNumber: const IntType()
@@ -45,8 +45,8 @@ class Page extends DataClass implements Insertable<Page> {
     return map;
   }
 
-  PagesCompanion toCompanion(bool nullToAbsent) {
-    return PagesCompanion(
+  PageCompanion toCompanion(bool nullToAbsent) {
+    return PageCompanion(
       id: Value(id),
       pageNumber: Value(pageNumber),
       hizbNumber: Value(hizbNumber),
@@ -55,10 +55,10 @@ class Page extends DataClass implements Insertable<Page> {
     );
   }
 
-  factory Page.fromJson(Map<String, dynamic> json,
+  factory PageData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Page(
+    return PageData(
       id: serializer.fromJson<int>(json['id']),
       pageNumber: serializer.fromJson<int>(json['pageNumber']),
       hizbNumber: serializer.fromJson<int>(json['hizbNumber']),
@@ -78,13 +78,13 @@ class Page extends DataClass implements Insertable<Page> {
     };
   }
 
-  Page copyWith(
+  PageData copyWith(
           {int? id,
           int? pageNumber,
           int? hizbNumber,
           int? juz,
           String? chapterCode}) =>
-      Page(
+      PageData(
         id: id ?? this.id,
         pageNumber: pageNumber ?? this.pageNumber,
         hizbNumber: hizbNumber ?? this.hizbNumber,
@@ -93,7 +93,7 @@ class Page extends DataClass implements Insertable<Page> {
       );
   @override
   String toString() {
-    return (StringBuffer('Page(')
+    return (StringBuffer('PageData(')
           ..write('id: $id, ')
           ..write('pageNumber: $pageNumber, ')
           ..write('hizbNumber: $hizbNumber, ')
@@ -108,7 +108,7 @@ class Page extends DataClass implements Insertable<Page> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Page &&
+      (other is PageData &&
           other.id == this.id &&
           other.pageNumber == this.pageNumber &&
           other.hizbNumber == this.hizbNumber &&
@@ -116,20 +116,20 @@ class Page extends DataClass implements Insertable<Page> {
           other.chapterCode == this.chapterCode);
 }
 
-class PagesCompanion extends UpdateCompanion<Page> {
+class PageCompanion extends UpdateCompanion<PageData> {
   final Value<int> id;
   final Value<int> pageNumber;
   final Value<int> hizbNumber;
   final Value<int> juz;
   final Value<String> chapterCode;
-  const PagesCompanion({
+  const PageCompanion({
     this.id = const Value.absent(),
     this.pageNumber = const Value.absent(),
     this.hizbNumber = const Value.absent(),
     this.juz = const Value.absent(),
     this.chapterCode = const Value.absent(),
   });
-  PagesCompanion.insert({
+  PageCompanion.insert({
     this.id = const Value.absent(),
     required int pageNumber,
     required int hizbNumber,
@@ -139,7 +139,7 @@ class PagesCompanion extends UpdateCompanion<Page> {
         hizbNumber = Value(hizbNumber),
         juz = Value(juz),
         chapterCode = Value(chapterCode);
-  static Insertable<Page> custom({
+  static Insertable<PageData> custom({
     Expression<int>? id,
     Expression<int>? pageNumber,
     Expression<int>? hizbNumber,
@@ -155,13 +155,13 @@ class PagesCompanion extends UpdateCompanion<Page> {
     });
   }
 
-  PagesCompanion copyWith(
+  PageCompanion copyWith(
       {Value<int>? id,
       Value<int>? pageNumber,
       Value<int>? hizbNumber,
       Value<int>? juz,
       Value<String>? chapterCode}) {
-    return PagesCompanion(
+    return PageCompanion(
       id: id ?? this.id,
       pageNumber: pageNumber ?? this.pageNumber,
       hizbNumber: hizbNumber ?? this.hizbNumber,
@@ -193,7 +193,7 @@ class PagesCompanion extends UpdateCompanion<Page> {
 
   @override
   String toString() {
-    return (StringBuffer('PagesCompanion(')
+    return (StringBuffer('PageCompanion(')
           ..write('id: $id, ')
           ..write('pageNumber: $pageNumber, ')
           ..write('hizbNumber: $hizbNumber, ')
@@ -204,11 +204,11 @@ class PagesCompanion extends UpdateCompanion<Page> {
   }
 }
 
-class $PagesTable extends Pages with TableInfo<$PagesTable, Page> {
+class $PageTable extends Page with TableInfo<$PageTable, PageData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $PagesTable(this.attachedDatabase, [this._alias]);
+  $PageTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -241,11 +241,11 @@ class $PagesTable extends Pages with TableInfo<$PagesTable, Page> {
   List<GeneratedColumn> get $columns =>
       [id, pageNumber, hizbNumber, juz, chapterCode];
   @override
-  String get aliasedName => _alias ?? 'pages';
+  String get aliasedName => _alias ?? 'page';
   @override
-  String get actualTableName => 'pages';
+  String get actualTableName => 'page';
   @override
-  VerificationContext validateIntegrity(Insertable<Page> instance,
+  VerificationContext validateIntegrity(Insertable<PageData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -288,14 +288,14 @@ class $PagesTable extends Pages with TableInfo<$PagesTable, Page> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Page map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Page.fromData(data,
+  PageData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return PageData.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $PagesTable createAlias(String alias) {
-    return $PagesTable(attachedDatabase, alias);
+  $PageTable createAlias(String alias) {
+    return $PageTable(attachedDatabase, alias);
   }
 }
 
@@ -433,7 +433,7 @@ class $LinesTable extends Lines with TableInfo<$LinesTable, Line> {
       'page_i_d', aliasedName, false,
       type: const IntType(),
       requiredDuringInsert: true,
-      defaultConstraints: 'REFERENCES pages (id)');
+      defaultConstraints: 'REFERENCES page (id)');
   @override
   List<GeneratedColumn> get $columns => [id, pageID];
   @override
@@ -1000,11 +1000,11 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
 
 abstract class _$QuranDB extends GeneratedDatabase {
   _$QuranDB(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  late final $PagesTable pages = $PagesTable(this);
+  late final $PageTable page = $PageTable(this);
   late final $LinesTable lines = $LinesTable(this);
   late final $WordsTable words = $WordsTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [pages, lines, words];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [page, lines, words];
 }

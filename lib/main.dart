@@ -28,24 +28,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // routes: CustomRouter.routes,
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      title: 'تطبيق معين',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xfffff8ed),
-        primarySwatch: Colors.green,
-      ),
-      home: Scaffold(
-          appBar: AppBar(title: Text("test")),
-          body: Center(
-              child: TextButton(
-                  onPressed: () => {print("low")}, child: Text("hello")))),
-    );
+        // routes: CustomRouter.routes,
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        title: 'تطبيق معين',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xfffff8ed),
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(appBar: AppBar(title: Text("test")), body: Body()));
   }
 }
 
+class Body extends StatelessWidget {
+  const Body({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    void getPage() async {
+      var pages =
+          await Provider.of<QuranDB>(context, listen: false).getAllPages;
+      print(pages);
+    }
+
+    return Center(
+        child: TextButton(onPressed: () => {getPage()}, child: Text("hello")));
+  }
+}
 // class Word extends StatefulWidget {
 //   var word;
 //   var pageID;

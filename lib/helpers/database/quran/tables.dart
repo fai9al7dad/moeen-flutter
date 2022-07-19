@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Pages extends Table {
+class Page extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get pageNumber => integer()();
   IntColumn get hizbNumber => integer()();
@@ -12,7 +12,7 @@ class Pages extends Table {
 
 class Lines extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get pageID => integer().references(Pages, #id)();
+  IntColumn get pageID => integer().references(Page, #id)();
 
   // int? id, pageID;
 }

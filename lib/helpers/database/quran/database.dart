@@ -15,7 +15,7 @@ LazyDatabase _openConnection() {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = io.File(join(dbFolder.path, 'app.db'));
     if (!await file.exists()) {
-      final blob = await rootBundle.load('assets/data/bases/quran.db');
+      final blob = await rootBundle.load('assets/databases/quran.db');
       final buffer = blob.buffer;
       await file.writeAsBytes(
           buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes));
@@ -31,11 +31,12 @@ LazyDatabase _openConnection() {
 //   final Category category;
 //   final Category category;
 // }
-@DriftDatabase(tables: [Pages, Lines, Words])
+@DriftDatabase(tables: [Page, Lines, Words])
 class QuranDB extends _$QuranDB {
   QuranDB() : super(_openConnection());
   int get schemaVersion => 1;
-  Future<List<Page>> get getAllPages => select(pages).get();
+
+  Future<List<PageData>> get getAllPages => select(page).get();
 
   // see next section on how to parse the result
 }
