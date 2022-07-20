@@ -63,9 +63,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - constants/page.json
-    - constants/Quran.json
     - assets/databases/quran.db
+    - assets/json/SURAHS.json
 
   fonts:
     - family: "montserrat-bold"

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moeen/helpers/general/constants.dart';
-import 'package:moeen/screens/quran/render_quran_list.dart';
 
 void main() {
   runApp(const MyApp());

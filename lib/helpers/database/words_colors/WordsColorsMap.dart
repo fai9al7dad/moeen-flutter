@@ -137,6 +137,30 @@ class WordColorMap {
     return {"mistakes": mistakes, "warnings": warnings};
   }
 
+  Future<Map<String, int>> getChapterColors({chapterCode}) async {
+    // Get a reference to the database.
+    var dbClient = await db;
+    // Query the table for all The Dogs.
+    final List<Map<String, dynamic>> maps = await dbClient!.query(
+        WordsColorsMapTable,
+        where: "chapterCode = ?",
+        whereArgs: [chapterCode]);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    int mistakes = 0;
+    int warnings = 0;
+    List.generate(maps.length, (i) {
+      if (maps[i]['color'] == MistakesColors.mistake) {
+        mistakes++;
+      }
+      if (maps[i]['color'] == MistakesColors.warning) {
+        warnings++;
+      }
+    });
+
+    return {"mistakes": mistakes, "warnings": warnings};
+  }
+
   Future<void> deleteAllColors() async {
     // Get a reference to the database.
     var dbClient = await db;

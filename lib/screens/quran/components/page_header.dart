@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:moeen/helpers/general/constants.dart';
 import 'package:moeen/providers/quran/quran_provider.dart';
@@ -52,25 +54,47 @@ class PageHeader extends StatelessWidget {
   }
 }
 
-class SurahName extends StatelessWidget {
+class SurahName extends StatefulWidget {
   final String surah;
   const SurahName({Key? key, required this.surah}) : super(key: key);
 
   @override
+  State<SurahName> createState() => _SurahNameState();
+}
+
+class _SurahNameState extends State<SurahName> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {Navigator.pushNamed(context, "/surah-list")},
+      onTap: () => _navigateAndGoToPage(context),
       child: Row(
         children: [
           const Icon(Icons.unfold_more, size: 10, color: Color(0xffae8f74)),
           Text(
-            "${surah}surah",
+            "${widget.surah}surah",
             style: TextStyle(
                 color: Color(textColor), fontFamily: "surahname", fontSize: 18),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _navigateAndGoToPage(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.pushNamed(context, "/surah-list");
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    Provider.of<QuranProvider>(context, listen: false)
+        .pageController
+        // ugly way , but because result is object
+        .jumpToPage(int.parse(result.toString()));
   }
 }
 
