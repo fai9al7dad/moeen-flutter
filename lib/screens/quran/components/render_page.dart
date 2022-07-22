@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
 import 'package:collection/collection.dart';
 import 'package:moeen/providers/quran/quran_provider.dart';
 import 'package:moeen/screens/quran/components/page_header.dart';
 import 'package:provider/provider.dart'; // You have to add this manually, for some reason it cannot be added automatically
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RenderPage extends StatelessWidget {
   final List page;
@@ -58,15 +58,30 @@ class RenderPage extends StatelessWidget {
                         return const TextSpan(
                             text: "ﱁﱂﱃﱄ\n", style: TextStyle(fontFamily: "p1"));
                       }
-                      return TextSpan(
-                          text: "${item["chapterCode"]}\n",
-                          style: const TextStyle(fontFamily: "surahname"));
+                      return WidgetSpan(
+                          child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/svg/surah_header_svg.svg",
+                            // color: Colors.blueGrey,
+                            // matchTextDirection: true,
+                          ),
+                          Text("${item["chapterCode"]}",
+                              style: const TextStyle(
+                                  fontFamily: "surahname", fontSize: 25))
+                        ],
+                      ));
+
+                      // TextSpan(
+                      //     text: "${item["chapterCode"]}\n",
+                      //     style: const TextStyle(fontFamily: "surahname"));
                     }
                     if (item["charType"] == "end" && !lineChanged) {
                       return TextSpan(
                           text: item["text"],
                           style: TextStyle(
-                            color: Colors.green,
+                            color: const Color(0xffae8f74),
                             fontFamily: "p${page[index]['pageNumber']}",
                           ));
                     }
@@ -74,7 +89,7 @@ class RenderPage extends StatelessWidget {
                       return TextSpan(
                           text: "${item["text"]}\n",
                           style: TextStyle(
-                            color: Colors.green,
+                            color: const Color(0xffae8f74),
                             fontFamily: "p${page[index]['pageNumber']}",
                           ));
                     }

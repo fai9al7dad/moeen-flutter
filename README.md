@@ -19,15 +19,7 @@
 
 ## current iteration
 
-- [ ] surah list
-  - [x] surah name
-  - [x] surah page from to
-  - [ ] type
-  - [x] mistakes and warning
-  - [x] pagescount
-  - [x] verses count
-  - [x] click go to first page
-- [ ] add surah header
+- [x] add surah header
 
 ## finished
 
@@ -42,3 +34,10 @@
   - [x] add page header
   - [x] surah name
     - [x] click to open surah list screen
+    - [x] surah name
+    - [x] surah page from to
+    - [x] mistakes and warning
+    - [x] pagescount
+    - [ ] type ... low pri
+    - [x] verses count
+    - [x] click go to first page

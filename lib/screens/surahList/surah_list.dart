@@ -1,13 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
 import 'package:moeen/helpers/general/constants.dart';
-import 'package:moeen/providers/quran/quran_provider.dart';
-import 'package:provider/provider.dart';
 
 class SurahList extends StatelessWidget {
   const SurahList({Key? key}) : super(key: key);
@@ -47,7 +44,6 @@ class _RenderListState extends State<RenderList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadJson();
   }
@@ -68,7 +64,7 @@ class _RenderListState extends State<RenderList> {
           textDirection: TextDirection.rtl,
           child: ListTile(
             onTap: () {
-              Navigator.pop(context, surahs[index]["pages"][0]);
+              Navigator.pop(context, surahs[index]["pages"][0] - 1);
             },
             leading: Text(surahs[index]["id"].toString()),
             title: Text(
@@ -138,7 +134,6 @@ class _SurahMistakesAndWarningsState extends State<SurahMistakesAndWarnings> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getMW();
   }

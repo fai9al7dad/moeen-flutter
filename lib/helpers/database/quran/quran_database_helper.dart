@@ -1,6 +1,5 @@
 import "dart:io" as io;
 import 'package:flutter/services.dart';
-import 'package:moeen/helpers/database/words_colors/WordsColorsMap.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -54,7 +53,6 @@ class DatabaseHelper {
 
     // List<JoinedQuran> quran = [];
     List<List> pages = initializePagesArray();
-    var wordColorsMap = WordColorMap();
     for (int i = 0; i < list.length; i++) {
       var item = list[i];
       // quran.add(JoinedQuran(

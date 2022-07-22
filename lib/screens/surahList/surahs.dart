@@ -35,7 +35,7 @@ class Surah {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['revelation_place'] = revelationPlace;
     data['revelation_order'] = revelationOrder;
@@ -64,7 +64,7 @@ class TranslatedName {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['language_name'] = languageName;
     data['name'] = name;
     return data;
