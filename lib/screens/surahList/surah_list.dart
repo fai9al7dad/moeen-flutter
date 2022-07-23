@@ -56,7 +56,7 @@ class _RenderListState extends State<RenderList> {
     return ListView.separated(
       separatorBuilder: (context, index) => const Divider(
         thickness: 0.8,
-        indent: 70,
+        endIndent: 70,
       ),
       itemCount: surahs.length,
       itemBuilder: (context, index) {

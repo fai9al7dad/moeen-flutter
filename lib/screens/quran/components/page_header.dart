@@ -46,8 +46,27 @@ class PageHeader extends StatelessWidget {
           PageNumber(pageNumber: page["pageNumber"]),
           PageHeaderMistakesAndWarnings(pageNumber: page["pageNumber"]),
         ]),
-        SurahName(
-          surah: page["chapterCode"],
+        Row(
+          children: [
+            SurahName(
+              surah: page["chapterCode"],
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            CircleAvatar(
+              // constraints: const BoxConstraints(minHeight: 0, minWidth: 0),
+              radius: 8,
+              child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minHeight: 0, minWidth: 0),
+                  onPressed: () => {},
+                  icon: const Icon(
+                    Icons.group,
+                    size: 12,
+                  )),
+            )
+          ],
         )
       ],
     );
